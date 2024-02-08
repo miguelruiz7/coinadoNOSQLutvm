@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormCuentasComponent } from './components/forms/form-cuentas/form-cuentas.component';
 import { CustomInputSelectComponent } from './components/custom-input-select/custom-input-select.component';
+import { FormCategoriasComponent } from './components/forms/form-categorias/form-categorias.component';
 
 
 
@@ -18,6 +19,7 @@ import { CustomInputSelectComponent } from './components/custom-input-select/cus
     LogoComponent,
     NavbarComponent,
     FormCuentasComponent,
+    FormCategoriasComponent,
     CustomInputSelectComponent
   ],
   exports:[
@@ -27,6 +29,7 @@ import { CustomInputSelectComponent } from './components/custom-input-select/cus
     ReactiveFormsModule,
     NavbarComponent,
     FormCuentasComponent,
+    FormCategoriasComponent,
     CustomInputSelectComponent
   ],
   imports: [

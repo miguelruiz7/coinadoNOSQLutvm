@@ -14,9 +14,8 @@ export class HomePage {
   
   firebaseSvc = inject(FirebaseService);
   utilSvc = inject(UtilsService);
-  saldoInicial: number;
-  saldoTotal: number;
-  saldoFinal: number;
+
+  saldos: number[];
 
   ionViewWillEnter(){
     this.leerInforme();
@@ -24,19 +23,56 @@ export class HomePage {
       
 
   leerInforme(){
-  this.firebaseSvc.generarReportes().then((informe: { totalIniciales: number, totalGeneral: number, totalSaldo : number }[]) => {
-    this.saldoInicial = informe[0].totalIniciales;
-    this.saldoFinal = informe[0].totalGeneral;
-    this.saldoTotal = informe[0].totalSaldo;
+    this.firebaseSvc.generarReportes().then((saldos: number[]) => {
+      this.saldos = saldos;
+      this.generarGrafica(this.saldos[0],this.saldos[1],this.saldos[2]);
+    }).finally(() => {
+     
+    })
+  }
 
-    console.log('Saldos: '+informe[0].totalSaldo);
+
+
+   calcularAhorro(opcion:string, saldoTotal, saldoInicial){
+    let operacion = (saldoTotal / saldoInicial - 1) * 100;
+    let operacionGasto = saldoTotal - saldoInicial ;
   
-    this.generarGrafica(this.saldoInicial, this.saldoFinal, this.saldoTotal);
-  }).catch(err => {
-    console.error(err);
-    console.log('Error');
-  });
-
+  switch(opcion){
+    
+    case 'ahorroNum':
+  
+    if(Number.isNaN(operacion)){
+      return 0;
+    }else {
+      return operacion.toFixed(0);
+    }
+  
+  
+   case 'ahorroLetra':
+  
+   if(operacion < 0){
+    return 'Disminución del ahorro total';
+   }else{
+    return 'Aumento del ahorro total';
+   }
+  
+   case 'gastoNum':
+    return operacionGasto.toLocaleString('es-MX', {
+      style: 'currency',
+      currency: 'MXN',
+    });
+  
+    case 'gastoLetra':
+      if(operacionGasto < 0){
+       return 'Gastados de más este periodo';
+      }else{
+       return 'Ahorrados este periodo';
+      }
+  
+  
+    default:
+      return 'Operacion inválida'
+  }
   }
 
   

@@ -39,7 +39,7 @@ export class AccountsPage implements OnInit {
     const cargando = await this.utilsSvc.cargando();
     await cargando.present();
 
-    this.firebaseSvc.obtenerCuentasBancarias(this.usuario).then((cuentas: string[]) => {
+    this.firebaseSvc.obtenerCuentasBancarias().then((cuentas: string[]) => {
       this.cuentasBanco = cuentas;
 
       if (this.cuentasBanco.length == 0) {
@@ -56,7 +56,12 @@ export class AccountsPage implements OnInit {
     })
   }
 
+
+
+
   eliminarCuenta(cuenta: string) {
+
+    console.log('Cuenta a eliminar: '+cuenta)
 
  this.firebaseSvc.eliminaTransacciones(cuenta).then(res => {
   this.firebaseSvc.eliminarCuenta(cuenta).then(res => {

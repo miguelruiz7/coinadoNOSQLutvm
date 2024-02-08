@@ -29,7 +29,7 @@ icon="pricetag-outline"
 
 <app-custom-input
 icon="cash-outline" 
-              type="text"
+              type="number"
               [control]="form.controls.cta_saldo"
               label="Ingrese la cantidad ($)"
 ></app-custom-input>
@@ -38,7 +38,6 @@ icon="cash-outline"
   <div *ngIf="form.controls.cta_saldo.errors?.['required']">Se requiere una cantidad</div>
   <div *ngIf="form.controls.cta_saldo.errors?.['pattern']">Formato no valido</div>
 </div>
-
 
 
 <div id="contenedorBtnsForm">

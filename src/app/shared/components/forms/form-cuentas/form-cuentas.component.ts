@@ -32,16 +32,19 @@ export class FormCuentasComponent  implements OnInit {
     cta_id: new FormControl(''),
     cta_nom: new FormControl('', [Validators.required, Validators.minLength(4)]),
     cta_cta_tipo: new FormControl('', [Validators.required]),
-    cta_saldo: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    cta_saldo:  new FormControl(null,  [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
     cta_usr_id: new FormControl(this.usuario)
+
   });
+
+
 
 
   transaccionInicial = new FormGroup({
     trans_id: new FormControl(''),
     trans_tpo: new FormControl(''),
     trans_desc: new FormControl(''),
-    trans_cant: new FormControl(''),
+    trans_cant: new FormControl(null),
     trans_tipo: new FormControl(''),
     trans_cta_id: new FormControl('')
   })
@@ -69,14 +72,11 @@ export class FormCuentasComponent  implements OnInit {
   }
 
   async insertarCuenta(){
-   
-      delete this.form.value.cta_id;
 
-     
+    this.form.controls.cta_saldo.setValue(Number(this.form.controls.cta_saldo.value));
 
-
-      this.firebaseSvc.crearCuenta(this.form.value).then(async res => {
-
+      this.firebaseSvc.crearCuenta( this.form.value as Cuenta).then(async res => {
+      
         const valoresTransaccion: transaccionInicial = {
           trans_id: '',
           trans_tpo: this.utilsSvc.obtenerFechaCompleta(),
@@ -116,7 +116,7 @@ export class FormCuentasComponent  implements OnInit {
   }
 
   async actualizarCuenta(){
-      this.firebaseSvc.modificarCuenta(this.form.value as Cuenta).then(async res => {
+      this.firebaseSvc.modificarCuenta(this.form.value as unknown as Cuenta).then(async res => {
         this.cerrarModal();
         this.firebaseSvc.notificarEventoExitoso();    
    
@@ -148,7 +148,7 @@ export class FormCuentasComponent  implements OnInit {
     this.firebaseSvc.obtenerInfoCuenta(cuenta).then((data: Cuenta) => {
        this.form.controls.cta_nom.setValue(data.cta_nom);
        this.form.controls.cta_saldo.setValue(data.cta_saldo);
-       this.form.controls.cta_cta_tipo.setValue(data.cta_cta_tipo);
+       this.form.controls.cta_cta_tipo.setValue(String(data.cta_cta_tipo));
        this.form.controls.cta_id.setValue(cuenta.toString());
     });
   }

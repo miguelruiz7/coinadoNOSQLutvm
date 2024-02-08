@@ -8,6 +8,7 @@ import { UtilsService } from './utils.service';
 import { Subject } from 'rxjs';
 import { Cuenta } from '../models/cuenta.model';
 import { transaccionInicial } from '../models/transaccion.model';
+import { Categoria } from '../models/categoria.model';
 
 
 @Injectable({
@@ -25,6 +26,7 @@ utilsSvc = inject(UtilsService);
 private eventoExitoso = new Subject<void>();
 eventoExitoso$ = this.eventoExitoso.asObservable();
 
+usuario = this.utilsSvc.obtenerLocalStorage('usr_mst').usr_id
 
 
 //Control de autenticacion
@@ -71,42 +73,44 @@ async obtenerDocumento(ruta: string){
 ///                                       ///
 /////////////////////////////////////////////
 
+async  generarReportes() {
 
-async generarReportes() {
-  const db = getFirestore();
+  const obtenerSaldosIniciales = query(collection(getFirestore(), `usr_mst/${this.usuario}/trans_mst`), where("trans_tipo", "==", 'abono'));
+  const consultarSaldosIniciales = await getDocs(obtenerSaldosIniciales);
+  let totalIniciales = 0;
+  consultarSaldosIniciales.forEach((doc) => {
+    const cantidad = doc.data()['trans_cant'];
+    totalIniciales += cantidad;
+  });
 
-  const query1 = query(collection(db, 'trans_mst'), where('trans_tipo', '==', 1));
-  const query2 = query(collection(db, 'trans_mst'), where('trans_tipo', '!=', 1));
-  const query3 = query(collection(db, 'cta_det'), where('cta_usr_id', '==', this.utilsSvc.obtenerLocalStorage('usr_mst').usr_id)); 
+  const obtenerSaldosDifInicial = query(collection(getFirestore(), `usr_mst/${this.usuario}/trans_mst`), where("trans_tipo", "!=", 'abono'));
+  const querySnapshot = await getDocs(obtenerSaldosDifInicial);
+  let totalDifInicial = 0;
+  querySnapshot.forEach((doc) => {
+    const cantidad = doc.data()['trans_cant'];
+    totalDifInicial += cantidad;
+  });
 
-  try {
-    const [result1, result2, result3] = await Promise.all([
-      getDocs(query1),
-      getDocs(query2),
-      getDocs(query3),
-    ]);
-
-    const totalIniciales = result1.docs.reduce((acc, doc) => acc + doc.data()['trans_cant'], 0) || 0;
-    const totalGeneral = result2.docs.reduce((acc, doc) => acc + doc.data()['trans_cant'], 0) || 0;
-    const totalSaldo = result3.docs.reduce((acc, doc) => acc + doc.data()['cta_saldo'], 0) || 0;
-
-    const reporteGeneral = {
-      totalIniciales,
-      totalGeneral,
-      totalSaldo,
-    };
-
-    return [reporteGeneral];
-  } catch (error) {
-    console.error('Error al realizar las consultas:', error);
-    throw error;
-  }
+  const obtenerSaldosTotalesPorCuenta = query(collection(getFirestore(), `usr_mst/${this.usuario}/cta_mst`));
+  const consultarSaldosTotalesCuentas = await getDocs(obtenerSaldosTotalesPorCuenta);
+  let totalCuentas = 0;
+  consultarSaldosTotalesCuentas.forEach((doc) => {
+    const cantidad = doc.data()['cta_saldo'];
+    totalCuentas += cantidad;
+  });
+  
+  return [totalIniciales, totalDifInicial, totalCuentas];
 }
 
 
+async ObtenerCuentasUsuario(){
+  const q = query(collection(getFirestore(), "cta_mst"), where("cta_usr_id", "==", this.usuario));
 
-
-
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data());
+  });
+}
 
 
 /////////////////////////////////////////////
@@ -114,11 +118,12 @@ async generarReportes() {
 ///                Cuentas                ///
 ///                                       ///
 /////////////////////////////////////////////
- async obtenerCuentasBancarias(usuario) {
-  const cuentasRef = collection(getFirestore(), 'cta_mst');
+
+ async obtenerCuentasBancarias() {
+  const cuentasRef = collection(getFirestore(), `usr_mst/${this.usuario}/cta_mst`);
 
   const q = 
-  query(cuentasRef, where('cta_usr_id', '==', usuario),
+  query(cuentasRef,
   orderBy('cta_nom','asc')
   );
 
@@ -137,20 +142,34 @@ async generarReportes() {
 }
 
 
-async crearCuenta(datos: any) {
-  const collectionRef = collection(getFirestore(), 'cta_mst');
+async crearCuenta(datos: Cuenta) {
+  delete datos.cta_id
+  const collectionRef = collection(getFirestore(), `usr_mst/${this.usuario}/cta_mst`);
   return addDoc(collectionRef, datos);
 }
 
+async modificarCuenta(datos: Cuenta) {
+  const id = datos.cta_id;
+  delete datos.cta_id;
+    return setDoc(doc(getFirestore(), `usr_mst/${this.usuario}/cta_mst/${id}`), datos);
+  }
 
-async eliminarCuenta(cuenta:string) {
-    const collectionRef = collection(getFirestore(), 'cta_mst');
+  async obtenerInfoCuenta(cuenta: Cuenta) {
+    return (await getDoc(doc(getFirestore(), `usr_mst/${this.usuario}/cta_mst/${cuenta}`))).data();
+  }
+  
+
+async eliminarCuenta(cuenta: string) {
+
+    const collectionRef = collection(getFirestore(), `usr_mst/${this.usuario}/cta_mst`);
     const documentRef = doc(collectionRef, cuenta);
     await deleteDoc(documentRef);
 }
 
+
+
 async eliminaTransacciones(cuenta: string): Promise<void> {
-  const transCollectionRef = collection(getFirestore(), 'trans_mst');
+  const transCollectionRef = collection(getFirestore(), `usr_mst/${this.usuario}/trans_mst`);
 
   const transQuery = query(transCollectionRef, where('trans_cta_id', '==', cuenta));
 
@@ -169,23 +188,12 @@ async eliminaTransacciones(cuenta: string): Promise<void> {
 }
 
 
-async obtenerInfoCuenta(cuenta: Cuenta) {
-  return (await getDoc(doc(getFirestore(), `cta_mst/${cuenta}`))).data();
-}
-
-async modificarCuenta(datos: Cuenta) {
-const id = datos.cta_id;
-delete datos.cta_id;
-  return setDoc(doc(getFirestore(), `cta_mst/${id}`), datos);
-}
-
-
 async generaTransaccion(tipo?: number, valores?: transaccionInicial): Promise<void | null> {
   switch (tipo) {
     case 1:
       try {
        delete valores.trans_id;
-        const collectionRef = collection(getFirestore(), 'trans_mst');
+        const collectionRef = collection(getFirestore(), `usr_mst/${this.usuario}/trans_mst`);
         await addDoc(collectionRef, valores);
         return; 
       } catch (error) {
@@ -197,6 +205,34 @@ async generaTransaccion(tipo?: number, valores?: transaccionInicial): Promise<vo
       return null; 
   }
 }
+
+
+
+/////////////////////////////////////////////
+///                                       ///
+///              Categorias               ///
+///                                       ///
+/////////////////////////////////////////////
+
+async obtenerCategorias(tipo: string) {
+  const categorias = [];
+  const q = query(collection(getFirestore(), `usr_mst/${this.usuario}/cat_mst`), where("cat_tipo", "==", tipo));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    console.log('categorias' + doc.data());
+    categorias.push({...doc.data()});
+  });
+
+  return categorias;
+}
+
+
+async crearCategorias(datos: Categoria) {
+  delete datos.cat_id
+  const collectionRef = collection(getFirestore(), `usr_mst/${this.usuario}/cat_mst`);
+  return addDoc(collectionRef, datos);
+}
+
 
 notificarEventoExitoso() {
   this.eventoExitoso.next();

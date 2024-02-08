@@ -16,14 +16,15 @@
       </ion-row>
       <ion-row>
       <ion-col>
-        <h2 id="tituloMedio">${{saldoInicial}}</h2>
+        <h2 id="tituloMedio">${{ saldos?.[0] }}</h2>
       </ion-col>
       <ion-col>
-        <h2 id="tituloMedio">$2000</h2>
+        <h2 id="tituloMedio">${{ saldos?.[2] }}</h2>
       </ion-col>
     </ion-row>
     </ion-grid>
   </div>
+  
   
   <div>
     <ion-grid  id="contenedorGraficas">
@@ -37,26 +38,26 @@
   </div>
   
   <ion-card id="contenedorTarjeta">
-    
-      <div id="contenedorDetalles">
-      <ion-card-header>
-        <ion-card-title> <ion-text color="success">
-          <h2 id="tituloChico">{{obtenerFecha()}}</h2>
-        </ion-text></ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-text color="dark">
-      <h2 id="tituloChico">% </h2>
-        </ion-text>
   
-      <ion-card-subtitle></ion-card-subtitle>
+    <div id="contenedorDetalles">
+    <ion-card-header>
+      <ion-card-title> <ion-text color="success">
+        <h2 id="tituloChico">{{obtenerFecha()}}</h2>
+      </ion-text></ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
       <ion-text color="dark">
-      <h2 id="tituloChico"></h2>
+    <h2 id="tituloChico">{{calcularAhorro('ahorroNum' ,  saldos?.[2] , saldos?.[0])}}% </h2>
       </ion-text>
-      <ion-card-subtitle></ion-card-subtitle>
-    </ion-card-content>
-    </div>
-    </ion-card>
+
+    <ion-card-subtitle>{{calcularAhorro('ahorroLetra' ,  saldos?.[2] , saldos?.[0])}}</ion-card-subtitle>
+    <ion-text color="dark">
+    <h2 id="tituloChico">{{calcularAhorro('gastoNum' ,  saldos?.[2] , saldos?.[0])}}</h2>
+    </ion-text>
+    <ion-card-subtitle>{{calcularAhorro('gastoLetra',   saldos?.[2] , saldos?.[0])}}</ion-card-subtitle>
+  </ion-card-content>
+  </div>
+  </ion-card>
   </ion-content>
   
   

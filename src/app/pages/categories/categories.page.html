@@ -1,13 +1,81 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>categories</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-text color="dark">
+  <h1 id="titulo">Mis categorías</h1>
+</ion-text>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">categories</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<div id="contenedorBtns">
+<ion-button color="success" mode="ios" (click)="formCategorias()">
+<ion-icon slot="start" name="add"></ion-icon>
+Agregar
+</ion-button> 
+</div>
+
+<ion-content>
+<ion-card>
+<ion-accordion-group>
+
+<ion-accordion value="acreedores">
+  <ion-item slot="header" color="light">
+    <ion-label id="tituloPequenoBold">Acreedores</ion-label>
+  </ion-item>
+    <ion-card slot="content">
+        <ion-item-sliding  *ngFor="let acreedor of acreedores">
+          <ion-item>
+           <ion-label id="tituloMicroBold" >{{acreedor['cat_nom']}}</ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option (click)="eliminarCategoria(acreedor['cat_id'])" color="white" >
+              <ion-icon slot="icon-only" color="success" name="trash"></ion-icon>
+            </ion-item-option>
+            <ion-item-option (click)="formCuentasAcualiza(acreedor['cat_id'])" color="white" >
+              <ion-icon slot="icon-only" color="success" name="create"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+    </ion-card>
+</ion-accordion>
+
+<ion-accordion value="gastos">
+  <ion-item slot="header" color="light">
+    <ion-label id="tituloPequenoBold" >Gastos</ion-label>
+  </ion-item>
+    <ion-card slot="content">           
+      <ion-item-sliding  *ngFor="let gasto of gastos">
+        <ion-item>
+         <ion-label id="tituloMicroBold" >{{gasto['cat_nom_']}}</ion-label>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option (click)="eliminarCategoria(gasto['cat_id_'])" color="white" >
+            <ion-icon slot="icon-only" color="success" name="trash"></ion-icon>
+          </ion-item-option>
+          <ion-item-option (click)="formCuentasAcualiza(gasto['cat_id_'])" color="white" >
+            <ion-icon slot="icon-only" color="success" name="create"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-card>
+</ion-accordion>
+
+<ion-accordion value="ingresos">
+  <ion-item slot="header" color="light">
+    <ion-label id="tituloPequenoBold">Ingresos</ion-label>
+  </ion-item>
+    <ion-card slot="content">          
+      <ion-item-sliding  *ngFor="let ingreso of ingresos">
+        <ion-item>
+         <ion-label id="tituloMicroBold" >{{ingreso['cat_nom_']}}</ion-label>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option (click)="eliminarCategoria(ingreso['cat_id_'])" color="white" >
+            <ion-icon slot="icon-only" color="success" name="trash"></ion-icon>
+          </ion-item-option>
+          <ion-item-option (click)="formCuentasAcualiza(ingreso['cat_id_'])" color="white" >
+            <ion-icon slot="icon-only" color="success" name="create"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-card>
+</ion-accordion>
+
+</ion-accordion-group>
+</ion-card>
 </ion-content>
