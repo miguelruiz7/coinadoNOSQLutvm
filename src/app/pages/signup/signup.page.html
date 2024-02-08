@@ -1,0 +1,171 @@
+<style type="text/css">
+  #contenedorIconos{
+    text-align: center;
+  }
+
+  #login_bg {
+    top: 0px;
+    left: 0px;
+   /* width: 100vh; */
+    height: 100vh;
+   /* background:rgba(45.42,92.56,213.76,1); */
+  }
+
+  #login_container {
+    top: 99vh;
+    /* left: 0px; */
+    /* height: 100vh; */
+    background-color: aliceblue;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    position: sticky;
+}
+
+#login_title {
+  top: 358px;
+    left: 133px;
+    /* width: 99px; */
+    /* height: 55.6px; */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 36px;
+    text-align: center;
+    letter-spacing: 1.5px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #000000;
+    color: #000000;
+    padding-top: 58px;
+        }
+
+    #login_subtitle {
+      top: 424px;
+      left: 44px;
+      /* width: 99px; */
+    /* height: 55.6px; */
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-size: 20px;
+      line-height: 32px;
+      text-align: center;
+      color:#927F7F;
+    }
+
+    #login_container_form{
+      text-align: center;
+    padding: 3vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    }
+
+
+    #login_input {
+      width: 255px;
+      height: 38px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-size: 15px;
+      -ms-border-radius: 6px;
+      -o-border-radius: 6px;
+      -moz-border-radius: 6px;
+      -webkit-border-radius: 6px;
+      border-radius: 6px;
+      background:rgba(217,217,217,1);
+      margin-bottom: 10px;
+      color: black;
+      border: none;
+    }
+
+
+#login_input_{
+  width: 255px;
+  border-radius: 11px;
+  margin: 5px;
+}
+
+  </style>
+  <ion-content [fullscreen]="true">
+  
+  <div id="login_bg">
+    <div id="contenedorIconos"><app-logo></app-logo></div>
+    <div id="login_container">
+        <div id="login_title" >
+          
+        </div>
+        <div id="login_subtitle" >
+          Registrese en la plataforma 
+        </div>
+
+        <div id="login_container_form">
+
+          <form [formGroup]="form"  (ngSubmit)="accesar()">
+
+
+            <app-custom-input 
+            autocomplete="usr_nom"  
+            icon="person-outline" 
+            type="text"
+            [control]="form.controls.usr_nom"
+            label="Nombre"
+            ></app-custom-input> 
+        
+            <div class="validators" *ngIf="form.controls.usr_nom.errors && form.controls.usr_nom.touched ">
+              <div *ngIf="form.controls.usr_nom.errors?.['required']">Se requiere un nombre de pila</div>
+              <div *ngIf="form.controls.usr_nom.errors?.['minlength']">Se requiere al menos cuatro caracteres</div>
+              
+            </div>
+
+
+
+            <app-custom-input 
+        
+            autocomplete="usr_correo"  
+            icon="mail-outline"
+            type="email"
+            [control]="form.controls.usr_correo"
+            label="Correo"
+            ></app-custom-input> 
+        
+            <div class="validators" *ngIf="form.controls.usr_correo.errors && form.controls.usr_correo.touched ">
+              <div *ngIf="form.controls.usr_correo.errors?.['required']">Se requiere una dirección de correo electronico</div>
+              <div *ngIf="form.controls.usr_correo.errors?.['email']">El formato de correo no es válido</div>
+            </div>
+        
+            <app-custom-input 
+            icon="lock-closed-outline" 
+            type="password"
+            [control]="form.controls.usr_con"
+            label="Contraseña"
+            ></app-custom-input> 
+        
+            <div class="validators" *ngIf="form.controls.usr_con.errors && form.controls.usr_con.touched || form.controls.usr_con.value !== form.controls.usr_con_con.value ">
+              <div *ngIf="form.controls.usr_con.errors?.['required'] && form.controls.usr_con_con.errors?.['required'] ">Se requiere que ambos campos esten llenos</div>
+              <div *ngIf="form.controls.usr_con.value !== form.controls.usr_con_con.value"> Las contraseñas no coinciden </div>
+            </div>
+
+            <app-custom-input 
+            icon="lock-closed-outline" 
+            type="password"
+            [control]="form.controls.usr_con_con"
+            label="Confirma la contraseña"
+            ></app-custom-input> 
+
+
+        
+        
+        
+          <ion-button type="submit" expand="block" mode="ios" class="submit" [disabled]="form.invalid">
+            Registrarse
+            <ion-icon slot="end" name="person-add-outline"></ion-icon>
+          </ion-button>
+
+          <ion-button routerLink="/login" class="ion-margin-top" type="button" expand="block" mode="ios" fill="outline">
+            Iniciar sesión
+            <ion-icon slot="end" name="log-in-outline"></ion-icon>
+          </ion-button>
+         
+            
+          </form>
+           
+        </div>
+         </div>
+  </div>
+</ion-content>

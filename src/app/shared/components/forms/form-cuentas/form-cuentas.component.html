@@ -1,0 +1,59 @@
+
+<div class="auth-form">
+
+  <app-custom-input-select 
+  icon="cash-outline"
+  label="Ingrese el tipo de cuenta"
+  [control]="form.controls.cta_cta_tipo"
+  >
+  </app-custom-input-select>
+
+  
+<div class="validators" *ngIf="form.controls.cta_cta_tipo.errors && form.controls.cta_cta_tipo.touched ">
+  <div *ngIf="form.controls.cta_cta_tipo.errors?.['required']">Seleccione un tipo de cuenta</div>
+</div>
+
+
+
+<app-custom-input
+icon="pricetag-outline" 
+              type="text"
+              [control]="form.controls.cta_nom"
+              label="Ingrese el nombre de la cuenta"
+></app-custom-input>
+
+<div class="validators" *ngIf="form.controls.cta_nom.errors && form.controls.cta_nom.touched ">
+  <div *ngIf="form.controls.cta_nom.errors?.['required']">Se requiere un nombre</div>
+  <div *ngIf="form.controls.cta_nom.errors?.['minlength']">Se requiere al menos cuatro caracteres</div>
+</div>
+
+<app-custom-input
+icon="cash-outline" 
+              type="text"
+              [control]="form.controls.cta_saldo"
+              label="Ingrese la cantidad ($)"
+></app-custom-input>
+
+<div class="validators" *ngIf="form.controls.cta_saldo.errors && form.controls.cta_saldo.touched ">
+  <div *ngIf="form.controls.cta_saldo.errors?.['required']">Se requiere una cantidad</div>
+  <div *ngIf="form.controls.cta_saldo.errors?.['pattern']">Formato no valido</div>
+</div>
+
+
+
+<div id="contenedorBtnsForm">
+  <ion-buttons>
+  <ion-button  mode="ios" (click)="cerrarModal()">
+    <ion-icon slot="start" name="close-outline"></ion-icon>
+    Cancelar
+  </ion-button> 
+</ion-buttons>
+<ion-buttons>
+  <ion-button  mode="ios" (click)="enviarCuenta()" [disabled]="form.invalid"  >
+    <ion-icon slot="start" name="checkmark"></ion-icon>
+    Confirmar
+  </ion-button> 
+</ion-buttons>
+</div>
+
+</div>

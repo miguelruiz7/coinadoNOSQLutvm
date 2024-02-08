@@ -1,0 +1,132 @@
+#titulo{
+    font-size: 7.5vh;
+     margin-left: 3vh;
+     font-family: system-ui;
+     width: 35vh;
+     margin-top: 0vh;
+  }
+ 
+ #tituloMedio{
+    font-size: 4.5vh;
+    font-family: system-ui;
+    margin: 1vh;
+ 
+ }
+ 
+ #tituloChico{
+    font-size: 3.5vh;
+    font-family: system-ui;
+    margin: 1vh;
+ }
+ 
+ #tituloChicoBold{
+   font-size: 3.5vh;
+   font-family: system-ui;
+   margin: 1vh;
+   font-weight: bold;
+ }
+ 
+ #tituloPequeno{
+    font-size: 2.8vh;
+     font-family: system-ui;
+     margin: 1vh;
+ }
+ 
+ #tituloPequenoBold{
+   font-size: 2.3vh;
+   font-family: system-ui;
+   margin: 1vh;
+   font-weight: bold;
+ }
+ 
+ #tituloMicroBold{
+   font-family: system-ui;
+   margin: 1vh;
+   font-weight: bold;
+ }
+ 
+ #contenedorAdvertencia{
+   text-align: center;
+ }
+ 
+ #contenedorPanel {
+    background: #38ff98ad;
+     /* width: 20vh; */
+      /* height: 30vh; */
+  }
+ 
+  #contenedorSaldos{
+    /*display: flex; */
+    text-align: center;
+    margin-top: 4vh;
+  }
+ 
+  #contenedorGraficas{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-left: 13vh;
+    margin-right: 11vh;
+    /* text-align: center; */
+    text-align: -webkit-center;
+  }
+ 
+  #contenedorTarjeta{
+    background-color: transparent;
+  }
+ 
+ 
+  #conenedorOpciones {
+    margin-bottom: -40vh;
+  }
+ 
+  #contenedorBtns{
+     text-align: end;
+     margin: 2vh;
+  }
+ 
+  #contenedorBtnsForm{
+   text-align: center;
+   margin: 3vh;
+   display: flex;
+   justify-content: center;
+ }
+ 
+ 
+ #contenedorCentrado{
+    text-align: center;
+ }
+ 
+ ion-tab-bar {
+    bottom: 20px;
+    position: relative;
+    border-radius: 16px;
+    width: 92%;
+    margin: 0 auto;
+  }
+  
+  ion-tab-button {
+    --color: var(--ion-color-medium);
+    --color-selected: var(--ion-color-success);
+  
+    &::before {
+      background-color: transparent;
+      display: block;
+      content: "";
+      margin: 0 auto;
+      width: 20px;
+      height: 2px;
+    }
+  
+    &.tab-selected::before {
+      background-color: var(--ion-color-success);
+    }
+  }
+ 
+ 
+  .list-md.list-inset {
+   border-radius: 3vh;
+   margin-bottom: 1vh;
+ }
+ 

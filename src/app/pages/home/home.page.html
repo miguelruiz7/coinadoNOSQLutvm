@@ -1,0 +1,63 @@
+
+<ion-content [fullscreen]="true">
+  <div id="contenedorPanel">
+    <ion-text color="dark">
+      <h1 id="titulo">Hola, {{obtenerNombre()}}</h1>
+    </ion-text>
+  
+    <ion-grid id="contenedorSaldos">
+      <ion-row>
+        <ion-col>
+          <h2 id="tituloPequeno">Inicial</h2>
+        </ion-col>
+        <ion-col>
+          <h2 id="tituloPequeno">Final</h2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+      <ion-col>
+        <h2 id="tituloMedio">${{saldoInicial}}</h2>
+      </ion-col>
+      <ion-col>
+        <h2 id="tituloMedio">$2000</h2>
+      </ion-col>
+    </ion-row>
+    </ion-grid>
+  </div>
+  
+  <div>
+    <ion-grid  id="contenedorGraficas">
+      <ion-col>
+        <canvas id="myChart"></canvas>
+      </ion-col>
+      <ion-col>
+        <canvas id="myChart2"></canvas>
+      </ion-col>
+    </ion-grid>
+  </div>
+  
+  <ion-card id="contenedorTarjeta">
+    
+      <div id="contenedorDetalles">
+      <ion-card-header>
+        <ion-card-title> <ion-text color="success">
+          <h2 id="tituloChico">{{obtenerFecha()}}</h2>
+        </ion-text></ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-text color="dark">
+      <h2 id="tituloChico">% </h2>
+        </ion-text>
+  
+      <ion-card-subtitle></ion-card-subtitle>
+      <ion-text color="dark">
+      <h2 id="tituloChico"></h2>
+      </ion-text>
+      <ion-card-subtitle></ion-card-subtitle>
+    </ion-card-content>
+    </div>
+    </ion-card>
+  </ion-content>
+  
+  
+  

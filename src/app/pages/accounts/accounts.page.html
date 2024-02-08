@@ -1,0 +1,42 @@
+
+<ion-text color="dark">
+  <h1  id="titulo">Mis cuentas</h1>
+</ion-text>
+
+<div id="contenedorBtns">
+<ion-button (click)="formCuentas()" color="success" mode="ios">
+  <ion-icon slot="start" name="add"></ion-icon>
+  Agregar
+</ion-button> 
+</div>
+
+<ion-content>
+
+<div *ngIf="cuentasBanco.length === 0" id="contenedorAdvertencia">
+  <img width="200vh" src="../../../assets/img/money.svg" />
+  <h2 id="tituloMedio">¡No hay cuentas!</h2>
+  </div>
+
+
+
+<ion-list *ngFor="let cuenta of cuentasBanco" [inset]="true" >
+  <ion-item-sliding>
+    <ion-item [button]="true" >
+      <ion-icon name="card" size="large"></ion-icon>  <ion-label id="tituloPequenoBold" slot="end">{{cuenta['cta_nom']}}</ion-label>
+      <p slot="end" id="tituloChicoBold" >${{cuenta['cta_saldo']}}</p>
+    </ion-item>
+    <ion-item-options side="end">
+      <ion-item-option  color="white" >
+        <ion-icon slot="icon-only" color="success" (click)="eliminarCuenta(cuenta['cta_id'])" name="trash"></ion-icon>
+      </ion-item-option>
+      <ion-item-option  color="white">
+        <ion-icon slot="icon-only" color="success"  (click)="formActualizarCuenta(cuenta['cta_id'])" name="create"></ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
+
+
+
+
+</ion-content>

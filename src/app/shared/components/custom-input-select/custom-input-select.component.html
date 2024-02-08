@@ -1,0 +1,10 @@
+<ion-item class="custom-input" lines="none">
+  <ion-icon slot="start" color="primary" *ngIf="icon" [name]="icon"></ion-icon>
+  <ion-select 
+  [label]="label"
+  [formControl]="control"
+  label-placement = "floating"
+  >
+  <ion-select-option *ngFor="let tipo of cta_tipos" value="{{tipo.cta_tipo_id}}">{{tipo.cta_tipo_nom}}</ion-select-option>
+</ion-select>
+</ion-item>

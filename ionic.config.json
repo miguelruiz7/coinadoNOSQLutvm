@@ -1,0 +1,7 @@
+{
+  "name": "coinadonoSQL",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
