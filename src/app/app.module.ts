@@ -12,6 +12,7 @@ import { AngularFireModule } from '@angular/fire/compat'
 import { environment } from 'src/environments/environment'
 import { NgChartsModule } from 'ng2-charts';
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot({mode:'md'}), NgChartsModule, AppRoutingModule, AngularFireModule.initializeApp(environment.firebaseConfig)],
