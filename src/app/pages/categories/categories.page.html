@@ -41,13 +41,13 @@ Agregar
     <ion-card slot="content">           
       <ion-item-sliding  *ngFor="let gasto of gastos">
         <ion-item>
-         <ion-label id="tituloMicroBold" >{{gasto['cat_nom_']}}</ion-label>
+         <ion-label id="tituloMicroBold" >{{gasto['cat_nom']}}</ion-label>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option (click)="eliminarCategoria(gasto['cat_id_'])" color="white" >
+          <ion-item-option (click)="eliminarCategoria(gasto['cat_id'])" color="white" >
             <ion-icon slot="icon-only" color="success" name="trash"></ion-icon>
           </ion-item-option>
-          <ion-item-option (click)="formCuentasAcualiza(gasto['cat_id_'])" color="white" >
+          <ion-item-option (click)="formCuentasAcualiza(gasto['cat_id'])" color="white" >
             <ion-icon slot="icon-only" color="success" name="create"></ion-icon>
           </ion-item-option>
         </ion-item-options>
@@ -62,13 +62,13 @@ Agregar
     <ion-card slot="content">          
       <ion-item-sliding  *ngFor="let ingreso of ingresos">
         <ion-item>
-         <ion-label id="tituloMicroBold" >{{ingreso['cat_nom_']}}</ion-label>
+         <ion-label id="tituloMicroBold" >{{ingreso['cat_nom']}}</ion-label>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option (click)="eliminarCategoria(ingreso['cat_id_'])" color="white" >
+          <ion-item-option (click)="eliminarCategoria(ingreso['cat_id'])" color="white" >
             <ion-icon slot="icon-only" color="success" name="trash"></ion-icon>
           </ion-item-option>
-          <ion-item-option (click)="formCuentasAcualiza(ingreso['cat_id_'])" color="white" >
+          <ion-item-option (click)="formCuentasAcualiza(ingreso['cat_id'])" color="white" >
             <ion-icon slot="icon-only" color="success" name="create"></ion-icon>
           </ion-item-option>
         </ion-item-options>

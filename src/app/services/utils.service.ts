@@ -44,10 +44,18 @@ cancelarModal(data?: any){
     return localStorage.setItem(key, JSON.stringify(value));
   }
 
-  obtenerLocalStorage(key: string){
-    return JSON.parse(localStorage.getItem(key));
+   obtenerLocalStorage(key: string) {
+    const valorGuardado = localStorage.getItem(key);
+  
+    if (valorGuardado) {
+      // Si hay un valor almacenado para la clave, devolver el valor parseado
+      return JSON.parse(valorGuardado);
+    } else {
+      // Si no hay un valor almacenado para la clave, devolver null
+      return null;
+    }
   }
-
+  
 
   obtenerFecha(){
     const meses: string[] = ['','ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
@@ -73,8 +81,5 @@ cancelarModal(data?: any){
   private agregarCero(numero: number): string {
     return numero < 10 ? `0${numero}` : `${numero}`;
   }
-
-
-
 
 }

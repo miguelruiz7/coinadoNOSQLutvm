@@ -11,13 +11,13 @@ import { transaccionInicial } from '../models/transaccion.model';
 import { Categoria } from '../models/categoria.model';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
-  getDatabase() {
-    throw new Error('Method not implemented.');
-  }
+
+  
 
 auth = inject(AngularFireAuth);
 firestore = inject(AngularFirestore);
@@ -26,7 +26,8 @@ utilsSvc = inject(UtilsService);
 private eventoExitoso = new Subject<void>();
 eventoExitoso$ = this.eventoExitoso.asObservable();
 
-usuario = this.utilsSvc.obtenerLocalStorage('usr_mst').usr_id
+usuario: string = this.utilsSvc.obtenerLocalStorage('usr_mst')?.usr_id;
+
 
 
 //Control de autenticacion
@@ -61,6 +62,10 @@ insertarDocumento(ruta: string, datos: any ){
 async obtenerDocumento(ruta: string){
   return (await getDoc(doc(getFirestore(), ruta))).data();
 }
+
+
+
+
 
 
 
@@ -220,7 +225,7 @@ async obtenerCategorias(tipo: string) {
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     console.log('categorias' + doc.data());
-    categorias.push({...doc.data()});
+    categorias.push({cat_id: doc.id,...doc.data()});
   });
 
   return categorias;
@@ -231,6 +236,12 @@ async crearCategorias(datos: Categoria) {
   delete datos.cat_id
   const collectionRef = collection(getFirestore(), `usr_mst/${this.usuario}/cat_mst`);
   return addDoc(collectionRef, datos);
+}
+
+async eliminarCategoria(categoria: string){
+  const collectionRef = collection(getFirestore(), `usr_mst/${this.usuario}/cat_mst`);
+  const documentRef = doc(collectionRef, categoria);
+  await deleteDoc(documentRef);
 }
 
 

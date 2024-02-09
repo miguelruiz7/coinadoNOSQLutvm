@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Inject, Injectable, forwardRef, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FirebaseService } from '../services/firebase.service';
@@ -9,7 +9,7 @@ import { UtilsService } from '../services/utils.service';
 })
 export class AuthGuard implements CanActivate {
 
-  firebaseSvc = inject(FirebaseService);
+  firebaseSvc = inject(forwardRef(() =>FirebaseService));
   utilSvc = inject(UtilsService);
 
 

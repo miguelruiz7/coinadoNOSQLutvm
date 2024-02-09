@@ -20,7 +20,11 @@ export class CategoriesPage implements OnInit {
 
   usuario = this.utilsSvc.obtenerLocalStorage('usr_mst').usr_id
 
-  constructor() { }
+  constructor() {
+    this.firebaseSvc.eventoExitoso$.subscribe(() => {
+      this.obtenerCategorias();
+    });
+   }
 
   ngOnInit() {
 
@@ -33,7 +37,6 @@ export class CategoriesPage implements OnInit {
 
 
   obtenerCategorias(){
-
    this.firebaseSvc.obtenerCategorias('ingresos').then((categorias: string[]) => {
     this.ingresos = categorias;
     console.log(this.ingresos)
@@ -51,9 +54,20 @@ export class CategoriesPage implements OnInit {
 
   }
   
-
-
   eliminarCategoria(categoria: string){
+
+    console.log('La categoria a eliminar es:' +categoria);
+
+    this.firebaseSvc.eliminarCategoria(categoria).then( res => {
+      this.utilsSvc.mostrarAlerta({
+        message: 'Se eliminó la categoria exitosamente',
+        duration: 2000,
+        color: 'primary',
+        icon: 'alert-circle-outline',
+        position: 'bottom'
+      })
+      this.obtenerCategorias();
+    })
 
   }
 

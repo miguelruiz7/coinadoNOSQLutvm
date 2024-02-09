@@ -22,12 +22,15 @@ export class HomePage {
       }
       
 
-  leerInforme(){
-    this.firebaseSvc.generarReportes().then((saldos: number[]) => {
+ async leerInforme(){
+    const cargando = await this.utilSvc.cargando();
+    await cargando.present();
+
+    this.firebaseSvc.generarReportes().then(async (saldos: number[]) => {
       this.saldos = saldos;
       this.generarGrafica(this.saldos[0],this.saldos[1],this.saldos[2]);
     }).finally(() => {
-     
+       cargando.dismiss();
     })
   }
 
