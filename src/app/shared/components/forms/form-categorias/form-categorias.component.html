@@ -30,7 +30,7 @@ icon="pricetag-outline"
   <div *ngIf="form.controls.cat_nom.errors?.['minlength']">Se requiere al menos cuatro caracteres</div>
 </div>
 
-
+{{ form.value | json }}
 
 <div id="contenedorBtnsForm">
   <ion-buttons>

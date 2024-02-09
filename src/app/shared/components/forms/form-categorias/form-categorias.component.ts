@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Categoria } from 'src/app/models/categoria.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
@@ -10,8 +10,17 @@ import { UtilsService } from 'src/app/services/utils.service';
   styleUrls: ['./form-categorias.component.scss'],
 })
 export class FormCategoriasComponent  implements OnInit {
+
+  @Input() categoria: Categoria; 
+
   utilsSvc =  inject(UtilsService);
   firebaseSvc = inject(FirebaseService);
+
+  ngOnInit() {
+    if(this.categoria){
+      this.obtenerInfoCategoria(this.categoria);
+    }
+  }
 
   usuario = this.utilsSvc.obtenerLocalStorage('usr_mst').usr_id
 
@@ -32,11 +41,17 @@ export class FormCategoriasComponent  implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
-
-
   enviar(){
-    this.insertarCategoria()
+    if(this.form.valid){
+      if(this.categoria){
+        this.actualizarCategoria();
+      }else{
+        this.insertarCategoria()
+      }
+    }
+
+    
+    
   }
 
 
@@ -68,10 +83,46 @@ export class FormCategoriasComponent  implements OnInit {
     
   }
 
+  async actualizarCategoria(){
+    this.firebaseSvc.modificarCategoria(this.form.value as unknown as Categoria).then(async res => {
+      this.cerrarModal();
+      this.firebaseSvc.notificarEventoExitoso();    
+ 
+      this.utilsSvc.mostrarAlerta({
+        message: 'Se ha modificado la categoria',
+        duration: 2000,
+        color: 'primary',
+        icon: 'alert-circle-outline',
+        position: 'bottom'
+      });
+
+    }).catch(error => {
+      this.utilsSvc.mostrarAlerta({
+        message: error.message,
+        duration: 2000,
+        color: 'primary',
+        icon: 'alert-circle-outline',
+        position: 'bottom'
+      });
+    }).finally(() => {
+   
+    });
+
+}
+
 
   cerrarModal(){
      this.utilsSvc.cancelarModal();
   }
 
+
+  async obtenerInfoCategoria(categoria: Categoria){
+    console.log('Se obtendra la info: ' + categoria)
+    this.firebaseSvc.obtenerInfoCategoria(categoria).then((data: Categoria) => {
+       this.form.controls.cat_id.setValue(categoria.toString());
+       this.form.controls.cat_nom.setValue(data.cat_nom);
+       this.form.controls.cat_tipo.setValue(data.cat_tipo);
+    });
+  }
 
 }

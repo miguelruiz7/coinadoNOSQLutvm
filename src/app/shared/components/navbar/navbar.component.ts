@@ -1,5 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilsService } from 'src/app/services/utils.service';
+import { FormTransaccionComponent } from '../forms/form-transaccion/form-transaccion.component';
 
 @Component({
   selector: 'app-navbar',
@@ -9,14 +11,42 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 export class NavbarComponent  implements OnInit {
 
   firebaseSvc =  inject(FirebaseService);
+  
+  utilsSvc = inject(UtilsService);
 
   constructor() { }
 
   ngOnInit() {}
 
-  cerrarSesion(){
-    this.firebaseSvc.cerrarSesion();
-  }
+  public accionesAgregar = [
+    {
+      text: 'Transacción',
+      data: {
+        action: 'add_transaccion',
+      },
+    },
+    {
+      text: 'Cancelar',
+      role: 'cancel',
+      data: {
+        action: 'cancel',
+      },
+    }
+  ];
+
+
+
+  logResult(ev) {
+
+    switch(ev.detail.data.action){
+     case 'add_transaccion':
+      this.utilsSvc.mostrarModal({
+        component: FormTransaccionComponent,
+      });
+
+       break;
+    }
+   }
 
 
 }

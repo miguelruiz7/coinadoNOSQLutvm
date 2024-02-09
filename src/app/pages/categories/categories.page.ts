@@ -72,6 +72,14 @@ export class CategoriesPage implements OnInit {
   }
 
   formCuentasAcualiza(categoria: string){
+    console.log('La categoria a editar es:' +categoria);
+
+    this.utilsSvc.mostrarModal({
+      component: FormCategoriasComponent,
+      componentProps: {
+        categoria
+      }
+    })
 
   }
 

@@ -238,11 +238,24 @@ async crearCategorias(datos: Categoria) {
   return addDoc(collectionRef, datos);
 }
 
+async modificarCategoria(datos: Categoria) {
+  const id = datos.cat_id;
+  delete datos.cat_id;
+    return setDoc(doc(getFirestore(), `usr_mst/${this.usuario}/cat_mst/${id}`), datos);
+  }
+
+
 async eliminarCategoria(categoria: string){
   const collectionRef = collection(getFirestore(), `usr_mst/${this.usuario}/cat_mst`);
   const documentRef = doc(collectionRef, categoria);
   await deleteDoc(documentRef);
 }
+
+
+async obtenerInfoCategoria(categoria: Categoria) {
+  return (await getDoc(doc(getFirestore(), `usr_mst/${this.usuario}/cat_mst/${categoria}`))).data();
+}
+
 
 
 notificarEventoExitoso() {

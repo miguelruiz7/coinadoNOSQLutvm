@@ -9,6 +9,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormCuentasComponent } from './components/forms/form-cuentas/form-cuentas.component';
 import { CustomInputSelectComponent } from './components/custom-input-select/custom-input-select.component';
 import { FormCategoriasComponent } from './components/forms/form-categorias/form-categorias.component';
+import { FormTransaccionComponent } from './components/forms/form-transaccion/form-transaccion.component';
 
 
 
@@ -20,6 +21,7 @@ import { FormCategoriasComponent } from './components/forms/form-categorias/form
     NavbarComponent,
     FormCuentasComponent,
     FormCategoriasComponent,
+    FormTransaccionComponent,
     CustomInputSelectComponent
   ],
   exports:[
@@ -30,6 +32,7 @@ import { FormCategoriasComponent } from './components/forms/form-categorias/form
     NavbarComponent,
     FormCuentasComponent,
     FormCategoriasComponent,
+    FormTransaccionComponent,
     CustomInputSelectComponent
   ],
   imports: [
