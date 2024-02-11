@@ -10,8 +10,7 @@ import { FormCuentasComponent } from './components/forms/form-cuentas/form-cuent
 import { CustomInputSelectComponent } from './components/custom-input-select/custom-input-select.component';
 import { FormCategoriasComponent } from './components/forms/form-categorias/form-categorias.component';
 import { FormTransaccionComponent } from './components/forms/form-transaccion/form-transaccion.component';
-
-
+import { ModalTransaccionesComponent } from './components/modal/modal-transacciones/modal-transacciones.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,8 @@ import { FormTransaccionComponent } from './components/forms/form-transaccion/fo
     FormCuentasComponent,
     FormCategoriasComponent,
     FormTransaccionComponent,
-    CustomInputSelectComponent
+    CustomInputSelectComponent,
+    ModalTransaccionesComponent
   ],
   exports:[
     HeaderComponent,
@@ -33,7 +33,8 @@ import { FormTransaccionComponent } from './components/forms/form-transaccion/fo
     FormCuentasComponent,
     FormCategoriasComponent,
     FormTransaccionComponent,
-    CustomInputSelectComponent
+    CustomInputSelectComponent,
+    ModalTransaccionesComponent
   ],
   imports: [
     CommonModule,
