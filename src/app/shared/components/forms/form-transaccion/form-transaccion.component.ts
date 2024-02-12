@@ -10,6 +10,11 @@ import { UtilsService } from 'src/app/services/utils.service';
 })
 export class FormTransaccionComponent  implements OnInit {
 
+
+  public categoriasIngreso: string[] = [];
+  public categoriasAcreedores: string[] = [];
+  public cuentas: string[] = [];
+
   utilsSvc =  inject(UtilsService);
   firebaseSvc = inject(FirebaseService);
 
@@ -18,10 +23,10 @@ export class FormTransaccionComponent  implements OnInit {
     trans_tipo_id: new FormControl(''),
     trans_cant:  new FormControl(null,  [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
     trans_desc: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    trans_cat_ing:  new FormControl(''),
-    trans_cta_id: new FormControl(''),
-    trans_metodo_cobro: new FormControl(''),
-    trans_cat_per: new FormControl(''),
+    trans_cat_ing:  new FormControl('', [Validators.required]),
+    trans_cta_id: new FormControl('', [Validators.required]),
+    trans_metodo_cobro: new FormControl('', [Validators.required]),
+    trans_cat_per: new FormControl('', [Validators.required]),
     
   });
 
@@ -44,7 +49,10 @@ export class FormTransaccionComponent  implements OnInit {
   constructor() { }
 
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.obtenerCategorias();
+    this.obtenerCuentas();
+  }
 
 
   cerrarModal(){
@@ -55,5 +63,25 @@ export class FormTransaccionComponent  implements OnInit {
   enviar(){
 
   }
+
+
+  obtenerCategorias(){
+    this.firebaseSvc.obtenerCategorias('ingresos').then((categoriasIngreso: string[]) => {
+     this.categoriasIngreso = categoriasIngreso;
+     console.log(this.categoriasIngreso)
+   });
+
+   this.firebaseSvc.obtenerCategorias('acredores').then((categoriasAcreedores: string[]) => {
+    this.categoriasAcreedores = categoriasAcreedores;
+    console.log(this.categoriasAcreedores)
+  });
+}
+
+obtenerCuentas(){
+  this.firebaseSvc.obtenerCuentasBancarias().then((cuentas: string[]) => {
+    this.cuentas = cuentas;
+    console.log(this.cuentas)
+  });
+}
 
 }

@@ -2,9 +2,9 @@
 <div class="auth-form">
 
   <ion-item class="custom-input" lines="none">
-    <ion-icon slot="start" color="primary" name="pricetag-outline"></ion-icon>
+    <ion-icon slot="start" color="primary" name="albums-outline"></ion-icon>
     <ion-select 
-    label="Seleccione la categoria que pertenece"
+    label="¿Qué tipo de transaccion desea realizar?"
     [formControl]="form.controls.trans_tipo_id"
     label-placement = "floating"
     >
@@ -13,8 +13,113 @@
   </ion-item>
   
   <div class="validators" *ngIf="form.controls.trans_tipo_id.errors && form.controls.trans_tipo_id.touched ">
-    <div *ngIf="form.controls.trans_tipo_id.errors?.['required']">Seleccione un tipo de categoria</div>
+    <div *ngIf="form.controls.trans_tipo_id.errors?.['required']">Seleccione un tipo de transaccion</div>
   </div> 
+
+
+
+  <div *ngIf="form.controls.trans_tipo_id.value == 'ingreso'" id="ingreso">
+     <!-- mostrara campos de ingreso --> 
+
+       <app-custom-input
+icon="cash-outline" 
+              type="number"
+              [control]="form.controls.trans_cant"
+              label="Ingrese la cantidad ($)"
+></app-custom-input>
+
+<div class="validators" *ngIf="form.controls.trans_cant.errors && form.controls.trans_cant.touched ">
+  <div *ngIf="form.controls.trans_cant.errors?.['required']">Se requiere una cantidad</div>
+  <div *ngIf="form.controls.trans_cant.errors?.['pattern']">Formato no valido</div>
+</div>
+
+
+<app-custom-input
+icon="pencil-outline" 
+              type="text"
+              [control]="form.controls.trans_desc"
+              label="Ingrese la descripcion o concepto"
+></app-custom-input>
+
+<div class="validators" *ngIf="form.controls.trans_desc.errors && form.controls.trans_desc.touched ">
+  <div *ngIf="form.controls.trans_desc.errors?.['required']">Se requiere una descripcion</div>
+  <div *ngIf="form.controls.trans_desc.errors?.['minlength']">Se requiere al menos 4 caracteres</div>
+</div>
+
+
+<ion-item class="custom-input" lines="none">
+  <ion-icon slot="start" color="primary" name="albums-outline"></ion-icon>
+  <ion-select 
+  label="Seleccione la categoria de ingresos"
+  [formControl]="form.controls.trans_cat_ing"
+  label-placement = "floating"
+  >
+  <ion-select-option *ngFor="let categoria of categoriasIngreso" value="{{categoria['cat_id']}}">{{categoria['cat_nom']}}</ion-select-option>
+</ion-select>
+</ion-item>
+
+<div class="validators" *ngIf="form.controls.trans_cat_ing.errors && form.controls.trans_cat_ing.touched ">
+  <div *ngIf="form.controls.trans_cat_ing.errors?.['required']">Seleccione un tipo de categoria</div>
+</div> 
+
+
+<ion-item class="custom-input" lines="none">
+  <ion-icon slot="start" color="primary" name="card-outline"></ion-icon>
+  <ion-select 
+  label="Seleccione la cuenta"
+  [formControl]="form.controls.trans_cta_id"
+  label-placement = "floating"
+  >
+  <ion-select-option *ngFor="let cuenta of cuentas" value="{{cuenta['cta_id']}}">{{cuenta['cta_nom']}}</ion-select-option>
+</ion-select>
+</ion-item>
+
+<div class="validators" *ngIf="form.controls.trans_cta_id.errors && form.controls.trans_cta_id.touched ">
+  <div *ngIf="form.controls.trans_cta_id.errors?.['required']">Seleccione una cuenta</div>
+</div> 
+
+
+<ion-item class="custom-input" lines="none">
+  <ion-icon slot="start" color="primary" name="wallet-outline"></ion-icon>
+  <ion-select 
+  label="Seleccione el metodo de cobro"
+  [formControl]="form.controls.trans_metodo_cobro"
+  label-placement = "floating"
+  >
+  <ion-select-option *ngFor="let metodo of metodos_tipos" value="{{metodo['metodo_tipo_id']}}">{{metodo['metodo_tipo_nom']}}</ion-select-option>
+</ion-select>
+</ion-item>
+
+<div class="validators" *ngIf="form.controls.trans_metodo_cobro.errors && form.controls.trans_metodo_cobro.touched ">
+  <div *ngIf="form.controls.trans_metodo_cobro.errors?.['required']">Seleccione una metodo de cobro</div>
+</div> 
+
+
+
+<ion-item class="custom-input" lines="none">
+  <ion-icon slot="start" color="primary" name="person-outline"></ion-icon>
+  <ion-select 
+  label="Seleccione el nombre del acreedor"
+  [formControl]="form.controls.trans_cat_per"
+  label-placement = "floating"
+  >
+  <ion-select-option *ngFor="let categoria of categoriasAcreedores" value="{{categoria['cat_id']}}">{{categoria['cat_nom']}}</ion-select-option>
+</ion-select>
+</ion-item>
+
+<div class="validators" *ngIf="form.controls.trans_cat_per.errors && form.controls.trans_cat_per.touched ">
+  <div *ngIf="form.controls.trans_cat_per.errors?.['required']">Seleccione el nombre del acreedor</div>
+</div> 
+
+
+
+
+  </div>
+
+
+  <div *ngIf="form.controls.trans_tipo_id.value == 'transaccion'" id="ingreso">
+     <!-- Transaccion -->
+  </div>
 
 
   

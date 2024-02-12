@@ -220,6 +220,10 @@ async generaTransaccion(tipo?: number, valores?: transaccionInicial): Promise<vo
 /////////////////////////////////////////////
 
 async obtenerCategorias(tipo: string) {
+
+
+
+  if(tipo != ''){
   const categorias = [];
   const q = query(collection(getFirestore(), `usr_mst/${this.usuario}/cat_mst`), where("cat_tipo", "==", tipo));
   const querySnapshot = await getDocs(q);
@@ -229,6 +233,17 @@ async obtenerCategorias(tipo: string) {
   });
 
   return categorias;
+}else{
+  const categorias = [];
+  const q = query(collection(getFirestore(), `usr_mst/${this.usuario}/cat_mst`));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    console.log('categorias' + doc.data());
+    categorias.push({cat_id: doc.id,...doc.data()});
+  });
+  return categorias;
+}
+
 }
 
 
@@ -254,6 +269,35 @@ async eliminarCategoria(categoria: string){
 
 async obtenerInfoCategoria(categoria: Categoria) {
   return (await getDoc(doc(getFirestore(), `usr_mst/${this.usuario}/cat_mst/${categoria}`))).data();
+}
+
+/////////////////////////////////////////////
+///                                       ///
+///             Transacciones             ///
+///                                       ///
+/////////////////////////////////////////////
+
+async obtenerTransacciones(cuenta: string) {
+  const transaccionesRef = collection(getFirestore(), `usr_mst/${this.usuario}/trans_mst`);
+
+  const q = 
+  query(transaccionesRef,
+  where('trans_cta_id',"==", cuenta),
+  orderBy('trans_tpo','desc')
+  );
+
+  try {
+    const querySnapshot = await getDocs(q);
+    const trasacciones = [];
+    querySnapshot.forEach((doc) => {
+      trasacciones.push({trans_id: doc.id,...doc.data()});
+    });
+
+    return trasacciones;
+  } catch (error) {
+    console.error('Error al obtener las transacciones:', error);
+    throw error;
+  }
 }
 
 

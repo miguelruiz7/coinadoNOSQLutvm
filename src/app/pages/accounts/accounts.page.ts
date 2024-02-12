@@ -3,6 +3,8 @@ import { Cuenta } from 'src/app/models/cuenta.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { FormCuentasComponent } from 'src/app/shared/components/forms/form-cuentas/form-cuentas.component';
+import { FormTransaccionComponent } from 'src/app/shared/components/forms/form-transaccion/form-transaccion.component';
+import { ModalTransaccionesComponent } from 'src/app/shared/components/modal/modal-transacciones/modal-transacciones.component';
 
 @Component({
   selector: 'app-accounts',
@@ -86,6 +88,18 @@ export class AccountsPage implements OnInit {
       })
   }
 
+
+muestraTransacciones(cuenta?:Cuenta){
+    console.log("Se mostraran las transacciones del a cuenta: "+ cuenta)
+
+      this.utilsSvc.mostrarModal({
+        component: ModalTransaccionesComponent,
+        componentProps: {
+          cuenta
+        }
+      })
+  
+}
 
 
 
