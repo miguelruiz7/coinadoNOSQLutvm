@@ -1,42 +1,23 @@
+<div class="ion-page">
+  <ion-header>
+    <h2 id="tituloMedio">Mis transacciones</h2>
+    <h3 id="tituloPequeno"> (Beta_v1)</h3>
+    <div id="contenedorBtnsForm">
+    <ion-buttons>
+      <ion-button  mode="ios" (click)="cerrarModal()" >
+        <ion-icon slot="start" name="close"></ion-icon>
+        Cerrar
+      </ion-button> 
+    </ion-buttons>
+    </div>
+        </ion-header>
 
-<ion-text color="dark">
-  <h1  id="titulo">Mis cuentas</h1>
-</ion-text>
-
-<div id="contenedorBtns">
-<ion-button color="success" mode="ios">
-  <ion-icon slot="start" name="add"></ion-icon>
-  Agregar
-</ion-button> 
+        <ion-content>
+          <ion-list [inset]="true">
+            <ion-item *ngFor="let transaccion of transaccionesCuenta">
+              <ion-icon name="card" size="large"></ion-icon>  <ion-label id="tituloPequenoBold" slot="end">{{transaccion['trans_tmp']}} {{transaccion['trans_desc']}}</ion-label>
+               <p slot="end" id="tituloChicoBold" >${{transaccion['trans_cant']}}</p>
+            </ion-item>
+            </ion-list>
+        </ion-content>
 </div>
-
-<ion-content>
-
-<div id="contenedorAdvertencia">
-  <img width="200vh" src="../../../assets/img/money.svg" />
-  <h2 id="tituloMedio">¡No hay cuentas!</h2>
-  </div>
-
-
-
-<ion-list *ngFor="let cuenta of " [inset]="true" >
-  <ion-item-sliding>
-    <ion-item [button]="true" >
-      <ion-icon name="card" size="large"></ion-icon>  <ion-label id="tituloPequenoBold" slot="end">{{cuenta['cta_nom']}}</ion-label>
-      <p slot="end" id="tituloChicoBold" >${{cuenta['cta_saldo']}}</p>
-    </ion-item>
-    <ion-item-options side="end">
-      <ion-item-option  color="white" >
-        <ion-icon slot="icon-only" color="success" (click)="(cuenta['cta_id'])" name="trash"></ion-icon>
-      </ion-item-option>
-      <ion-item-option  color="white">
-        <ion-icon slot="icon-only" color="success"  (click)="(cuenta['cta_id'])" name="create"></ion-icon>
-      </ion-item-option>
-    </ion-item-options>
-  </ion-item-sliding>
-</ion-list>
-
-
-
-
-</ion-content>

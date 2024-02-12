@@ -21,7 +21,7 @@
 
 <ion-list *ngFor="let cuenta of cuentasBanco" [inset]="true" >
   <ion-item-sliding>
-    <ion-item [button]="true" >
+    <ion-item [button]="true" (click)="muestraTransacciones(cuenta['cta_id'])" >
       <ion-icon name="card" size="large"></ion-icon>  <ion-label id="tituloPequenoBold" slot="end">{{cuenta['cta_nom']}}</ion-label>
       <p slot="end" id="tituloChicoBold" >${{cuenta['cta_saldo']}}</p>
     </ion-item>
