@@ -1,3 +1,39 @@
-<p>
-  form-transaccion works!
-</p>
+
+<div class="auth-form">
+
+  <ion-item class="custom-input" lines="none">
+    <ion-icon slot="start" color="primary" name="pricetag-outline"></ion-icon>
+    <ion-select 
+    label="Seleccione la categoria que pertenece"
+    [formControl]="form.controls.trans_tipo_id"
+    label-placement = "floating"
+    >
+    <ion-select-option *ngFor="let tipo of trans_tipos" value="{{tipo.trans_tipo_id}}">{{tipo.trans_tipo_nom}}</ion-select-option>
+  </ion-select>
+  </ion-item>
+  
+  <div class="validators" *ngIf="form.controls.trans_tipo_id.errors && form.controls.trans_tipo_id.touched ">
+    <div *ngIf="form.controls.trans_tipo_id.errors?.['required']">Seleccione un tipo de categoria</div>
+  </div> 
+
+
+  
+  
+  
+  
+  <div id="contenedorBtnsForm">
+    <ion-buttons>
+    <ion-button  mode="ios" (click)="cerrarModal()">
+      <ion-icon slot="start" name="close-outline"></ion-icon>
+      Cancelar
+    </ion-button> 
+  </ion-buttons>
+  <ion-buttons>
+    <ion-button  mode="ios" (click)="enviar()" [disabled]="form.invalid"  >
+      <ion-icon slot="start" name="checkmark"></ion-icon>
+      Confirmar
+    </ion-button> 
+  </ion-buttons>
+  </div>
+  
+  </div>
