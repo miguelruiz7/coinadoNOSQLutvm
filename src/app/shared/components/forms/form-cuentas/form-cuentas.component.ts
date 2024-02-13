@@ -34,7 +34,6 @@ export class FormCuentasComponent  implements OnInit {
     cta_cta_tipo: new FormControl('', [Validators.required]),
     cta_saldo:  new FormControl(null,  [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
     cta_usr_id: new FormControl(this.usuario)
-
   });
 
 
@@ -75,7 +74,7 @@ export class FormCuentasComponent  implements OnInit {
 
     this.form.controls.cta_saldo.setValue(Number(this.form.controls.cta_saldo.value));
 
-      this.firebaseSvc.crearCuenta( this.form.value as Cuenta).then(async res => {
+      this.firebaseSvc.crearCuenta(this.form.value as Cuenta).then(async res => {
       
         const valoresTransaccion: transaccionInicial = {
           trans_id: '',
@@ -86,9 +85,8 @@ export class FormCuentasComponent  implements OnInit {
           trans_cta_id: res.id
         };
 
-        console.log(res);
 
-       await this.firebaseSvc.generaTransaccion(1, valoresTransaccion).then(async res => {
+       await this.firebaseSvc.generaTransaccion(0, valoresTransaccion).then(async res => {
         this.cerrarModal();
         this.firebaseSvc.notificarEventoExitoso();    
         this.utilsSvc.mostrarAlerta({
@@ -147,7 +145,7 @@ export class FormCuentasComponent  implements OnInit {
     console.log('Se obtendra la info: ' + cuenta)
     this.firebaseSvc.obtenerInfoCuenta(cuenta).then((data: Cuenta) => {
        this.form.controls.cta_nom.setValue(data.cta_nom);
-       this.form.controls.cta_saldo.setValue(data.cta_saldo);
+     //  this.form.controls.cta_saldo.setValue(data.cta_saldo);
        this.form.controls.cta_cta_tipo.setValue(String(data.cta_cta_tipo));
        this.form.controls.cta_id.setValue(cuenta.toString());
     });

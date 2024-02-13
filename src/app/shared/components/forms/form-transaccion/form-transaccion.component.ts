@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { transaccionInicial } from 'src/app/models/transaccion.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -60,7 +61,37 @@ export class FormTransaccionComponent  implements OnInit {
  }
 
 
-  enviar(){
+  async enviarIngreso(){
+
+    this.form.controls.trans_cant.setValue(Number(this.form.controls.trans_cant.value));
+    
+      const valoresTransaccion: transaccionInicial = {
+        trans_id: '',
+        trans_tpo: this.utilsSvc.obtenerFechaCompleta(),
+        trans_desc: this.form.controls.trans_desc.value,
+        trans_cant: this.form.value.trans_cant,
+        trans_tipo: 'ingreso',
+        trans_cat_ing: this.form.controls.trans_cat_ing.value,
+        trans_cta_id:  this.form.controls.trans_cta_id.value,
+        trans_metodo_cobro:  this.form.controls.trans_metodo_cobro.value,
+        trans_cat_per:  this.form.controls.trans_cat_per.value,
+      };
+
+    await this.firebaseSvc.generaTransaccion(1, valoresTransaccion).then(async res => {
+      this.cerrarModal();
+      this.firebaseSvc.notificarEventoExitoso();    
+      this.utilsSvc.mostrarAlerta({
+        message: 'Se ha agregado la transaccion',
+        duration: 2000,
+        color: 'primary',
+        icon: 'alert-circle-outline',
+        position: 'bottom'
+      });
+     });
+
+  }
+
+  enviarTransaccion(){
 
   }
 

@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import {Usuario} from '../models/usuario.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getFirestore, setDoc, getDoc, doc, collection, query, where, getDocs, addDoc, deleteDoc, orderBy} from '@angular/fire/firestore';
+import { getFirestore, setDoc, getDoc, doc, collection, query, where, getDocs, addDoc, deleteDoc, orderBy, updateDoc, increment} from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { Subject } from 'rxjs';
 import { Cuenta } from '../models/cuenta.model';
@@ -193,17 +193,42 @@ async eliminaTransacciones(cuenta: string): Promise<void> {
 }
 
 
-async generaTransaccion(tipo?: number, valores?: transaccionInicial): Promise<void | null> {
+async generaTransaccion(tipo?: number, valores?: transaccionInicial ): Promise<void | null> {
   switch (tipo) {
+
+    case 0:
+      
+      try {
+        delete valores.trans_id;
+         const collectionRef = collection(getFirestore(), `usr_mst/${this.usuario}/trans_mst`);
+         await addDoc(collectionRef, valores);
+         return; 
+       } catch (error) {
+         return null; 
+       }
+
+
+
+
     case 1:
       try {
        delete valores.trans_id;
-        const collectionRef = collection(getFirestore(), `usr_mst/${this.usuario}/trans_mst`);
+      const collectionRef = collection(getFirestore(), `usr_mst/${this.usuario}/trans_mst`);
         await addDoc(collectionRef, valores);
+
+        // Agrega para que actualize la cuenta con el saldo
+     const accountRef = doc(getFirestore(), `usr_mst/${this.usuario}/cta_mst/${valores.trans_cta_id}`);
+      await updateDoc(accountRef, {
+        cta_saldo: increment(valores.trans_cant) 
+      }); 
+
+
         return; 
       } catch (error) {
         return null; 
       }
+
+
 
     default:
       console.warn('Tipo de transacción no reconocido:', tipo);

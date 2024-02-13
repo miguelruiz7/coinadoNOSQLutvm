@@ -1,4 +1,4 @@
-
+<ion-content [fullscreen]="true">
 <div class="auth-form">
 
   <ion-item class="custom-input" lines="none">
@@ -119,6 +119,10 @@ icon="pencil-outline"
 
   <div *ngIf="form.controls.trans_tipo_id.value == 'transaccion'" id="ingreso">
      <!-- Transaccion -->
+
+
+
+     
   </div>
 
 
@@ -134,11 +138,21 @@ icon="pencil-outline"
     </ion-button> 
   </ion-buttons>
   <ion-buttons>
-    <ion-button  mode="ios" (click)="enviar()" [disabled]="form.invalid"  >
+
+
+    <ion-button *ngIf="form.controls.trans_tipo_id.value == 'ingreso'"   mode="ios" (click)="enviarIngreso()" [disabled]="form.invalid"  >
       <ion-icon slot="start" name="checkmark"></ion-icon>
       Confirmar
     </ion-button> 
+
+    <ion-button *ngIf="form.controls.trans_tipo_id.value == 'transaccion'"   mode="ios" (click)="enviarTransaccion()" [disabled]="form.invalid"  >
+      <ion-icon slot="start" name="checkmark"></ion-icon>
+      Confirmar
+    </ion-button> 
+
   </ion-buttons>
   </div>
   
   </div>
+
+</ion-content>
