@@ -65,6 +65,11 @@ const routes: Routes = [
         path: 'categories',
         loadChildren: () => import('./pages/categories/categories.module').then( m => m.CategoriesPageModule),
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'transaction',
+        loadChildren: () => import('./pages/transaction/transaction.module').then( m => m.TransactionPageModule),
+        canActivate: [AuthGuard]
       }
     ],
   },
@@ -72,6 +77,7 @@ const routes: Routes = [
     path: 'logout',
     loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
   },
+
  
  
 
