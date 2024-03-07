@@ -70,6 +70,16 @@ const routes: Routes = [
         path: 'transaction',
         loadChildren: () => import('./pages/transaction/transaction.module').then( m => m.TransactionPageModule),
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'cuentasxp',
+        loadChildren: () => import('./pages/cuentasxp/cuentasxp.module').then(m => m.CuentasxpPageModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'cuentasxc',
+        loadChildren: () => import('./pages/cuentasxc/cuentasxc.module').then(m => m.CuentasxcPageModule),
+        canActivate: [AuthGuard]
       }
     ],
   },
@@ -77,6 +87,15 @@ const routes: Routes = [
     path: 'logout',
     loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
   },
+  {
+    path: 'cuentasxp',
+    loadChildren: () => import('./pages/cuentasxp/cuentasxp.module').then( m => m.CuentasxpPageModule)
+  },
+  {
+    path: 'cuentasxc',
+    loadChildren: () => import('./pages/cuentasxc/cuentasxc.module').then( m => m.CuentasxcPageModule)
+  },
+
 
  
  
