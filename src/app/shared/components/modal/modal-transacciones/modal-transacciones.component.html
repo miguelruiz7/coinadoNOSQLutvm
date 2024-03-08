@@ -1,7 +1,7 @@
 <div class="ion-page">
   <ion-header>
-    <h2 id="tituloMedio">Mis transacciones</h2>
-    <h3 id="tituloPequeno"> (Beta_v1)</h3>
+    <h2 id="tituloMedio">Detalles de la cuenta</h2>
+
     <div id="contenedorBtnsForm">
     <ion-buttons>
       <ion-button  mode="ios" (click)="cerrarModal()" >
@@ -13,55 +13,51 @@
         </ion-header>
 
         <ion-content>
-          <!-- <ion-list [inset]="true">
-            <ion-item *ngFor="let transaccion of transaccionesCuenta">
-              <ion-icon name="card" size="large"></ion-icon>  <ion-label id="tituloPequenoBold" slot="end">{{transaccion['trans_tmp']}} {{transaccion['trans_desc']}}</ion-label>
-               <p slot="end" id="tituloChicoBold" >${{transaccion['trans_cant']}}</p>
-            </ion-item>
-            </ion-list> -->
-
-            <ion-text color="dark">
-              <h1 id="titulo">Transacciones</h1>
-            </ion-text>
             
             <ion-content>
-            
-              <ion-header>
-                <ion-toolbar>
-                  <ion-title>Número de cuenta/tarjeta</ion-title>
-                  <ion-title class="tarjeta">**** **** **** 1234</ion-title>
-                </ion-toolbar>
-              </ion-header>
-            
-              <!-- Saldo Actual -->
-              <ion-card>
-                <ion-card-header>
-                  <ion-card-title>Saldo Actual</ion-card-title>
-                  <ion-card-subtitle class="saldo"><h2>$0.00</h2></ion-card-subtitle>
-                </ion-card-header>
+        
+              <ion-card id="contenedorDetalles">
+                <ion-card-header color="light"><p id="tituloPequenoBold">{{informacionCuenta['cta_nom']}}</p></ion-card-header>
+                <ion-card-content>
+                  <p color="warning" id="tituloPequenoBold">Saldo actual: ${{informacionCuenta['cta_saldo']}}</p>
+                </ion-card-content>
+                
               </ion-card>
             
-              <!-- Tabla de Movimientos -->
-              <ion-card>
-                <ion-card-header color="light">Movimientos</ion-card-header>
-              </ion-card>
+   
+
+              <div id="contenedorDetalles">
+              
+             <h3 id="tituloPequeno"> Mis movimientos </h3>
+
+             <ion-button (click)="obtenerTransaccionesAnteriores()" fill="clear" shape="round">
+              Mes anterior
+            </ion-button>
+            <ion-button (click)="obtenerTransaccionesAnteriores(1)"   fill="clear" shape="round">
+              Mes actual
+            </ion-button>
+          </div>
             
-              <ion-card>
-                <ion-card-header color="light">18 febrero 2024</ion-card-header>
+            <ion-content id="transaccionesMovimientos">
+            
+              <ion-card *ngFor="let transaccion of transaccionesCuenta">
+                <ion-card-header color="light"><p id="tituloPequenoBold" >{{this.utilsSvc.formateaFechas(transaccion['trans_tpo'], 1)}}</p></ion-card-header>
                 <ion-card-content>
                   <ion-row>
                     <ion-col>Descripción</ion-col>
-                    <ion-col class="derecha">Monto</ion-col>
+                    <ion-col class="derecha">Monto </ion-col>
                   </ion-row>
             
                   <!-- Datos de la Tabla -->
                   <ion-row>
-                    <ion-col>Retiro efectivo</ion-col>
-                    <ion-col class="derecha">-$200</ion-col>
+                    <ion-col>{{transaccion['trans_desc']}}</ion-col>
+                    <ion-col class="derecha">${{transaccion['trans_cant']}}</ion-col>
                   </ion-row>
             
                 </ion-card-content>
               </ion-card>
+
+            </ion-content>
             
             </ion-content>
             

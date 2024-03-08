@@ -31,12 +31,21 @@ export class FormTransaccionComponent  implements OnInit {
     
   });
 
+  formTraspasos = new FormGroup({
+    trans_tipo_id: new FormControl(''),
+    trans_cant:  new FormControl(null,  [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    trans_desc: new FormControl('Trapaso de fondos a cuenta'),
+    trans_cta_id: new FormControl('', [Validators.required]),   
+    trans_cta_id_trasp: new FormControl('', [Validators.required]), 
+  });
+
 
 
 
   trans_tipos : Array<{ trans_tipo_id: string, trans_tipo_nom: string }> = [
     { trans_tipo_id: "ingreso", trans_tipo_nom: 'Ingreso' },
-    { trans_tipo_id: "transaccion", trans_tipo_nom: 'Transaccion' },
+   /* { trans_tipo_id: "transaccion", trans_tipo_nom: 'Transaccion' },*/
+    { trans_tipo_id: "traspaso", trans_tipo_nom: 'Traspaso' },
   ];
 
 
@@ -93,6 +102,11 @@ export class FormTransaccionComponent  implements OnInit {
 
   enviarTransaccion(){
 
+  }
+
+
+  enviarTraspaso(){
+    
   }
 
 

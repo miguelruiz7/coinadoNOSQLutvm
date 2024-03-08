@@ -20,7 +20,7 @@ export class NavbarComponent  implements OnInit {
 
   public accionesAgregar = [
     {
-      text: 'Transacción',
+      text: 'Movimiento',
       data: {
         action: 'add_transaccion',
       },

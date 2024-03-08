@@ -126,6 +126,58 @@ icon="pencil-outline"
   </div>
 
 
+  <div *ngIf="form.controls.trans_tipo_id.value == 'traspaso'" id="ingreso">
+    <!-- Traspaso -->
+
+    <ion-item class="custom-input" lines="none">
+      <ion-icon slot="start" color="primary" name="card-outline"></ion-icon>
+      <ion-select 
+      label="Seleccione la cuenta"
+      [formControl]="formTraspasos.controls.trans_cta_id"
+      label-placement = "floating"
+      >
+      <ion-select-option *ngFor="let cuenta of cuentas" value="{{cuenta['cta_id']}}">{{cuenta['cta_nom']}}  (${{cuenta['cta_saldo']}})</ion-select-option>
+    </ion-select>
+    </ion-item>
+    
+    <div class="validators" *ngIf="formTraspasos.controls.trans_cta_id.errors && formTraspasos.controls.trans_cta_id.touched ">
+      <div *ngIf="formTraspasos.controls.trans_cta_id.errors?.['required']">Seleccione una cuenta</div>
+    </div> 
+
+
+    <app-custom-input
+    icon="cash-outline" 
+                  type="number"
+                  [control]="formTraspasos.controls.trans_cant"
+                  label="Ingrese la cantidad a traspasar ($)"
+    ></app-custom-input>
+    
+    <div class="validators" *ngIf="formTraspasos.controls.trans_cant.errors && formTraspasos.controls.trans_cant.touched ">
+      <div *ngIf="formTraspasos.controls.trans_cant.errors?.['required']">Se requiere una cantidad</div>
+      <div *ngIf="formTraspasos.controls.trans_cant.errors?.['pattern']">Formato no valido</div>
+    </div>
+
+
+    <ion-item class="custom-input" lines="none">
+      <ion-icon slot="start" color="primary" name="card-outline"></ion-icon>
+      <ion-select 
+      label="Seleccione la cuenta a traspasar"
+      [formControl]="formTraspasos.controls.trans_cta_id_trasp"
+      label-placement = "floating"
+      >
+      <ion-select-option *ngFor="let cuenta of cuentas" value="{{cuenta['cta_id']}}">{{cuenta['cta_nom']}}</ion-select-option>
+    </ion-select>
+    </ion-item>
+    
+    <div class="validators" *ngIf="formTraspasos.controls.trans_cta_id_trasp.errors && formTraspasos.controls.trans_cta_id_trasp.touched ">
+      <div *ngIf="formTraspasos.controls.trans_cta_id_trasp.errors?.['required']">Seleccione la cuenta donde se traspasara los fondos</div>
+    </div> 
+
+
+    
+ </div>
+
+
   
   
   
@@ -146,6 +198,11 @@ icon="pencil-outline"
     </ion-button> 
 
     <ion-button *ngIf="form.controls.trans_tipo_id.value == 'transaccion'"   mode="ios" (click)="enviarTransaccion()" [disabled]="form.invalid"  >
+      <ion-icon slot="start" name="checkmark"></ion-icon>
+      Confirmar
+    </ion-button> 
+
+    <ion-button *ngIf="form.controls.trans_tipo_id.value == 'traspaso'"   mode="ios" (click)="enviarTraspaso()" [disabled]="formTraspasos.invalid"  >
       <ion-icon slot="start" name="checkmark"></ion-icon>
       Confirmar
     </ion-button> 

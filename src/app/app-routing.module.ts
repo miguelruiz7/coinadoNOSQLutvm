@@ -67,11 +67,6 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'transaction',
-        loadChildren: () => import('./pages/transaction/transaction.module').then( m => m.TransactionPageModule),
-        canActivate: [AuthGuard]
-      },
-      {
         path: 'cuentasxp',
         loadChildren: () => import('./pages/cuentasxp/cuentasxp.module').then(m => m.CuentasxpPageModule),
         canActivate: [AuthGuard]

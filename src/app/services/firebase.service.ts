@@ -302,12 +302,14 @@ async obtenerInfoCategoria(categoria: Categoria) {
 ///                                       ///
 /////////////////////////////////////////////
 
-async obtenerTransacciones(cuenta: string) {
+async obtenerTransacciones(cuenta: string, fecha: string) {
   const transaccionesRef = collection(getFirestore(), `usr_mst/${this.usuario}/trans_mst`);
 
   const q = 
   query(transaccionesRef,
   where('trans_cta_id',"==", cuenta),
+  where('trans_tpo', '>=', fecha + '-01 00:00:00'), 
+  where('trans_tpo', '<=', fecha + '-31 23:59:59'), 
   orderBy('trans_tpo','desc')
   );
 

@@ -11,21 +11,21 @@
       <!--  Mis cuentas -->
     </ion-tab-button> 
 
-    <ion-tab-button tab="cuentasxp">
+   <!-- <ion-tab-button tab="cuentasxp">
       <ion-icon name="calculator-outline"></ion-icon>
-      <!--  Cuentas por pagar -->
+       Cuentas por pagar
     </ion-tab-button> 
 
     <ion-tab-button tab="cuentasxc">
       <ion-icon name="calculator-outline"></ion-icon>
-      <!--  Cuentas por cobrar -->
-    </ion-tab-button> 
+       Cuentas por cobrar 
+    </ion-tab-button>  -->
 
     <!--Boton-->
     <ion-fab-button color="success" id="open-action-sheet">
       <ion-icon name="add" ></ion-icon>
     </ion-fab-button>
-    <ion-action-sheet trigger="open-action-sheet" header="Agregar" [buttons]="accionesAgregar" (didDismiss)="logResult($event)"></ion-action-sheet>
+    <ion-action-sheet trigger="open-action-sheet" header="¿Qué deseas realizar?" [buttons]="accionesAgregar" (didDismiss)="logResult($event)"></ion-action-sheet>
   
    
     <ion-tab-button tab="categories">
@@ -38,10 +38,6 @@
       <!--Ajustes-->
     </ion-tab-button> 
     
-    <ion-tab-button tab="transaction">
-      <ion-icon name="apps"></ion-icon>
-      <!-- Transacciones -->
-    </ion-tab-button>
 
   </ion-tab-bar>
 </ion-tabs>

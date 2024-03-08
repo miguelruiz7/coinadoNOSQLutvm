@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController, ModalController, ModalOptions, ToastController, ToastOptions } from '@ionic/angular';
+import moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +81,40 @@ cancelarModal(data?: any){
 
   private agregarCero(numero: number): string {
     return numero < 10 ? `0${numero}` : `${numero}`;
+  }
+
+
+  obtenerFechaParcial(tipo:number){
+    var formato = '';
+
+    if(tipo == 0 ){
+    const fechaActual = new Date();
+    const anio = fechaActual.getFullYear();
+    const mes = this.agregarCero(fechaActual.getMonth() + 1);
+    formato = `${anio}-${mes}`;
+    }
+
+    if(tipo == 1 ){
+      const fechaActual = new Date();
+      const anio = fechaActual.getFullYear();
+      const mes = this.agregarCero(fechaActual.getMonth() + 1);
+      formato = `${anio}-${mes}`;
+      }
+  
+
+    return formato;
+
+  }
+
+
+  formateaFechas(dato, tipo){
+    moment.locale('es-mx')
+      var formato = '';
+
+      if(tipo == 1){
+      formato =  moment(dato).format('DD [de] MMMM [de] YYYY [a las] h:mm a');
+      }
+      return formato;
   }
 
 }
